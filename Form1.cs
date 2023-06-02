@@ -3,11 +3,20 @@ using OpenAI.GPT3.Managers;
 using OpenAI.GPT3.ObjectModels.RequestModels;
 using OpenAI.GPT3.ObjectModels;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.Text;
+using System.Net;
+using System.Net.Http.Json;
 
 namespace ChatGPT
 {
     public partial class Form1 : Form
     {
+        private static HttpClient gptClient = new()
+        {
+            BaseAddress = Constant.BackEndURL,
+        };
+
         public Form1()
         {
             InitializeComponent();
@@ -17,38 +26,42 @@ namespace ChatGPT
         {
             SendBtn.Enabled = false;
             Conversation.Text += "\nUser: " + UserInput.Text + "\n";
-            var openAiService = new OpenAIService(new OpenAiOptions()
-            {
-                ApiKey = "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"
-            });
-
-            var Messages = new List<ChatMessage>
-            {
-                ChatMessage.FromSystem("You are the top talented Tekla Structures C# Developer Assistant."),
-            };
-            for (int i = 0;i < Examples.questions.Count;i ++)
-            {
-                Messages.Add(ChatMessage.FromUser(Examples.questions[i]));
-                Messages.Add(ChatMessage.FromAssistant(Examples.answers[i]));
-            }
-            Messages.Add(ChatMessage.FromUser(UserInput.Text));
             string currentConversationText = Conversation.Text;
             Conversation.Text += "\nGenerating...";
-            var completionResult = await openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
+            
+            using StringContent jsonContent = new(
+            JsonSerializer.Serialize(new
             {
-                Messages = Messages,
-                Model = Models.ChatGpt3_5Turbo
-            });
-
+                input = UserInput.Text,
+                remember = rememberConversation.Checked
+            }),
+            Encoding.UTF8,
+            "application/json");
+            using HttpResponseMessage response = await gptClient.PostAsync("get-answer", jsonContent);
             SendBtn.Enabled = true;
-            if (completionResult.Successful)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                Conversation.Text = currentConversationText + "\nAssistant:\n " + completionResult.Choices.First().Message.Content;
-                UserInput.Text = "";
+                try
+                {
+                    var jsonResponse = response.Content.ReadAsStringAsync();
+                    string result = jsonResponse.Result;
+                    string cleanString = result.Trim('"', '\\');
+
+                    // Replace escaped newlines with actual newlines
+                    cleanString = cleanString.Replace("\\n", "\n");
+
+                    Conversation.Text = currentConversationText + "\nAssistant:\n " + cleanString + "\n";
+                    UserInput.Text = "";                    
+                } catch(Exception ex)
+                {
+                    MessageBox.Show("Error ocurred!");
+                    Conversation.Text = currentConversationText;
+                }
             }
             else
             {
-                Console.Write(completionResult.Error.Message);
+                MessageBox.Show("Error ocurred!");
+                Conversation.Text = currentConversationText;
             }
         }
 
@@ -57,6 +70,12 @@ namespace ChatGPT
             Conversation.SelectionStart = Conversation.Text.Length;
             // scroll it automatically
             Conversation.ScrollToCaret();
+        }
+
+        private void TrainBtn_Click(object sender, EventArgs e)
+        {
+            ExampleForm exampleForm = new ExampleForm();
+            exampleForm.ShowDialog();
         }
     }
 }

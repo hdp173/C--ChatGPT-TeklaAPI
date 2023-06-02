@@ -32,13 +32,15 @@
             this.UserInput = new System.Windows.Forms.TextBox();
             this.SendBtn = new System.Windows.Forms.Button();
             this.Conversation = new System.Windows.Forms.RichTextBox();
+            this.TrainBtn = new System.Windows.Forms.Button();
+            this.rememberConversation = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(12, 637);
+            this.label1.Location = new System.Drawing.Point(12, 647);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(66, 32);
             this.label1.TabIndex = 0;
@@ -49,12 +51,12 @@
             this.UserInput.Location = new System.Drawing.Point(74, 637);
             this.UserInput.Multiline = true;
             this.UserInput.Name = "UserInput";
-            this.UserInput.Size = new System.Drawing.Size(620, 39);
+            this.UserInput.Size = new System.Drawing.Size(551, 57);
             this.UserInput.TabIndex = 1;
             // 
             // SendBtn
             // 
-            this.SendBtn.Location = new System.Drawing.Point(713, 646);
+            this.SendBtn.Location = new System.Drawing.Point(631, 647);
             this.SendBtn.Name = "SendBtn";
             this.SendBtn.Size = new System.Drawing.Size(75, 23);
             this.SendBtn.TabIndex = 2;
@@ -72,11 +74,33 @@
             this.Conversation.Text = "";
             this.Conversation.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
+            // TrainBtn
+            // 
+            this.TrainBtn.Location = new System.Drawing.Point(712, 647);
+            this.TrainBtn.Name = "TrainBtn";
+            this.TrainBtn.Size = new System.Drawing.Size(75, 23);
+            this.TrainBtn.TabIndex = 4;
+            this.TrainBtn.Text = "Train";
+            this.TrainBtn.UseVisualStyleBackColor = true;
+            this.TrainBtn.Click += new System.EventHandler(this.TrainBtn_Click);
+            // 
+            // rememberConversation
+            // 
+            this.rememberConversation.AutoSize = true;
+            this.rememberConversation.Location = new System.Drawing.Point(631, 675);
+            this.rememberConversation.Name = "rememberConversation";
+            this.rememberConversation.Size = new System.Drawing.Size(141, 19);
+            this.rememberConversation.TabIndex = 5;
+            this.rememberConversation.Text = "remeber conversation";
+            this.rememberConversation.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 685);
+            this.ClientSize = new System.Drawing.Size(800, 698);
+            this.Controls.Add(this.rememberConversation);
+            this.Controls.Add(this.TrainBtn);
             this.Controls.Add(this.Conversation);
             this.Controls.Add(this.SendBtn);
             this.Controls.Add(this.UserInput);
@@ -96,5 +120,7 @@
         private RichTextBox richTextBox1;
         private TextBox UserInput;
         private RichTextBox Conversation;
+        private Button TrainBtn;
+        private CheckBox rememberConversation;
     }
 }
