@@ -8,6 +8,6 @@ namespace ChatGPT
 {
     internal static class Constant
     {
-        public static Uri BackEndURL = new Uri("http://localhost:8000");
+        public static Uri BackEndURL = new Uri("http://95.164.44.248:8000");
     }
 }

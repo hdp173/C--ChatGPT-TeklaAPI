@@ -34,6 +34,7 @@
             this.Conversation = new System.Windows.Forms.RichTextBox();
             this.TrainBtn = new System.Windows.Forms.Button();
             this.rememberConversation = new System.Windows.Forms.CheckBox();
+            this.trainProjectBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -69,7 +70,7 @@
             this.Conversation.Location = new System.Drawing.Point(12, 3);
             this.Conversation.Name = "Conversation";
             this.Conversation.ReadOnly = true;
-            this.Conversation.Size = new System.Drawing.Size(776, 628);
+            this.Conversation.Size = new System.Drawing.Size(893, 628);
             this.Conversation.TabIndex = 3;
             this.Conversation.Text = "";
             this.Conversation.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -94,11 +95,22 @@
             this.rememberConversation.Text = "remeber conversation";
             this.rememberConversation.UseVisualStyleBackColor = true;
             // 
+            // trainProjectBtn
+            // 
+            this.trainProjectBtn.Location = new System.Drawing.Point(797, 647);
+            this.trainProjectBtn.Name = "trainProjectBtn";
+            this.trainProjectBtn.Size = new System.Drawing.Size(103, 23);
+            this.trainProjectBtn.TabIndex = 6;
+            this.trainProjectBtn.Text = "Train Project";
+            this.trainProjectBtn.UseVisualStyleBackColor = true;
+            this.trainProjectBtn.Click += new System.EventHandler(this.trainProjectBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 698);
+            this.ClientSize = new System.Drawing.Size(912, 698);
+            this.Controls.Add(this.trainProjectBtn);
             this.Controls.Add(this.rememberConversation);
             this.Controls.Add(this.TrainBtn);
             this.Controls.Add(this.Conversation);
@@ -122,5 +134,6 @@
         private RichTextBox Conversation;
         private Button TrainBtn;
         private CheckBox rememberConversation;
+        private Button trainProjectBtn;
     }
 }
